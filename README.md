@@ -32,6 +32,5 @@ Learnly is a full-stack educational platform demonstrating skills in front-end a
 ## Installation
 ```bash
 git clone https://github.com/BarbodSh/learnly.git
-cd learnly
 npm install
 npm run dev
