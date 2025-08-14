@@ -10,6 +10,8 @@ Learnly is a full-stack educational platform demonstrating skills in front-end a
 ---
 
 ## Features
+- Personal user dashboard
+- Admin dashboard with role-based access
 - Course purchasing and lesson management
 - Comments and replies for courses
 - Ticket system for support
