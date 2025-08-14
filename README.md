@@ -44,6 +44,6 @@ npm run dev
 Before running the project, create a `.env.local` file in the root directory and add your MongoDB connection string:
 
 ```env
-Token_PRIVATE_KEY = kjsxhfdcjkfdkjgdljkdgfdkhjf
-Refresh_Token_PRIVATE_KEY = ulgtgfjbksdfgjdkgdsskjdgf
-MONGODB_URI = mongodb://localhost:27017/learnly
+Token_PRIVATE_KEY = djkshgfddsjhgdskjasdsddjhf
+Refresh_Token_PRIVATE_KEY = lkjgflufgtyhukrfkhjfhjkf
+MONGODB_URI = "your-mongodb-connection-string"
