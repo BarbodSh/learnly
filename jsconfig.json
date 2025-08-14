@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./*"],
+      "@/backend/*": ["./lib/backend/*"],
+      "@/frontend/*": ["./lib/frontend/*"],
+      "@/templates/*": ["./components/templates/*"],
+      "@/modules/*": ["./components/modules/*"],
+      "@/validator/*": ["./lib/validator/*"],
+      "@/models/*": ["./lib/backend/models/*"]
+    }
+  }
+}
