@@ -35,3 +35,15 @@ git clone https://github.com/BarbodSh/learnly.git
 cd learnly
 npm install
 npm run dev
+```
+
+---
+
+## Environment Variables
+
+Before running the project, create a `.env.local` file in the root directory and add your MongoDB connection string:
+
+```env
+Token_PRIVATE_KEY = kjsxhfdcjkfdkjgdljkdgfdkhjf
+Refresh_Token_PRIVATE_KEY = ulgtgfjbksdfgjdkgdsskjdgf
+MONGODB_URI = mongodb://localhost:27017/learnly
