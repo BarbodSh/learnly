@@ -10,6 +10,7 @@ import { notFound } from "next/navigation";
 import CoursesInCategoryWrapper from "@/components/templates/courses/coursesInCategoryWrapper";
 import Footer from "@/components/modules/footer/footer";
 import { rules } from "@/lib/validator/rules";
+export const revalidate = 0;
 async function page({ params }) {
   const param = await params;
   if (!rules.objectId.validate(param.slug)) {

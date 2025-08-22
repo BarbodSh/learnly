@@ -1,7 +1,7 @@
 import TableForUser from "@/templates/p-admin/user/tableForUser";
 import React from "react";
 import { getUser } from "@/backend/utils/user";
-
+export const revalidate = 0;
 async function page() {
   const user = await getUser();
   return (

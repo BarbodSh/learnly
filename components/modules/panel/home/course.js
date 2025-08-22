@@ -1,10 +1,9 @@
 import React from "react";
 import CourseBox from "@/modules/panel/course/courseBox";
 import connectToDB from "@/backend/configs/db";
-import orderModel from "@/models/order";
-import { getCourseOrder, getOrderForUser } from "@/lib/backend/utils/order";
+import { getCourseOrder } from "@/lib/backend/utils/order";
 
-async function Course({ userID }) {
+async function Course({ userID, wishList }) {
   await connectToDB();
   const orders = await getCourseOrder(userID);
   const allCourses = orders.flatMap((order) => order.course);
@@ -15,11 +14,16 @@ async function Course({ userID }) {
         <span className="text-lg">Last Courses:</span>
       </div>
       <div className="flex justify-center items-center gap-3 mt-3">
-        {allCourses.length > 0 ? (
+        {allCourses?.length > 0 ? (
           allCourses
-            .slice(-4)
+            .slice(-3)
             .map((course, index) => (
-              <CourseBox userID={userID} key={course._id} {...course} />
+              <CourseBox
+                userID={userID}
+                key={course._id}
+                {...course}
+                wishList={wishList}
+              />
             ))
         ) : (
           <div className="w-full p-2 bg-red-500 text-center rounded-lg">

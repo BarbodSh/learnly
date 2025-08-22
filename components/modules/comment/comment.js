@@ -34,18 +34,18 @@ function Comment({
             <p>{date.slice(0, 10)}</p>
           </div>
         </div>
-        <div className="mt-2 opacity-60">{text}</div>
+        <div className="mt-2">{text}</div>
       </div>
       {isAnswered === true ? (
-        <div className="responser w-[93%] mr-auto ml-auto rounded-lg mt-10 p-3 bg-sky-500/60">
-          <div className="border-b-1 border-dark/40 dark:border-white/60 flex justify-start items-center gap-3">
+        <div className="responser w-[93%] mr-auto ml-auto rounded-lg mt-10 p-3 bg-sky-500/60 dark:bg-sky-700/60">
+          <div className="border-b-1 border-dark/40 dark:border-white flex justify-start items-center gap-3">
             <div className="size-13 bg-dark dark:bg-white rounded-full mb-3"></div>
             <div className="mb-3">
               <p>{responder?.username}</p>
               <p>{responder?.role}</p>
             </div>
           </div>
-          <div className="mt-3 opacity-60">{textresponse}</div>
+          <div className="mt-3">{textresponse}</div>
         </div>
       ) : null}
     </div>

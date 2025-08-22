@@ -4,9 +4,12 @@ import { IoIosArrowDown } from "react-icons/io";
 import { CiLock } from "react-icons/ci";
 import { CiUnlock } from "react-icons/ci";
 import { showErrorSwal, showSuccessSwal } from "@/lib/frontend/utils/helper";
+import { SlBasket } from "react-icons/sl";
+import { motion } from "framer-motion";
 function Information({ courseId, courseTitle, amount, lessones, img, isBuy }) {
   const [openAccordian, setOpenAccordian] = useState(false);
   const accordian = useRef(null);
+  const [isLoadingForBuying, setIsLoadingForBuying] = useState(false);
 
   const addToCart = () => {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -25,29 +28,55 @@ function Information({ courseId, courseTitle, amount, lessones, img, isBuy }) {
     localStorage.setItem("cart", JSON.stringify(cart));
     window.dispatchEvent(new Event("localStorageChanged"));
     showSuccessSwal("add course in cart successfully");
+    setIsLoadingForBuying(true);
+    setTimeout(() => {
+      setIsLoadingForBuying(false);
+    }, 2000);
   };
 
   return (
     <div className="col-span-4 max-sm:col-span-12">
       <div className="bg-white dark:bg-dark shadow-lg rounded-xl mamad sara ease-in-out p-5 mb-5 ">
         {isBuy ? (
-          <div className="flex justify-center items-center rounded-lg bg-sky-500 p-2 text-2xl font-bold">
+          <div className="flex justify-center items-center rounded-lg bg-sky-500 dark:bg-sky-700 p-2 text-2xl font-bold">
             Course purchased
           </div>
         ) : (
           <div
-            className="flex justify-center items-center rounded-lg bg-red-500 p-2 text-2xl font-bold cursor-pointer"
+            className="flex justify-center items-center rounded-lg group bg-red-500 p-2 text-2xl font-bold cursor-pointer relative overflow-hidden"
             onClick={addToCart}
           >
-            Add to cart
+            {isLoadingForBuying ? (
+              <motion.div
+                className="z-20"
+                initial={{ opacity: 0, x: -180 }}
+                animate={{
+                  opacity: 1,
+                  x: 0,
+                  scale: [0.8, 0.9, 1.3],
+                  rotate: 360,
+                }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+              >
+                <SlBasket className="text-3xl" />
+              </motion.div>
+            ) : (
+              <div className="z-20">Add to cart</div>
+            )}
+            <div
+              className={`${
+                isLoadingForBuying ? "w-full opacity-100" : "w-0 opacity-0"
+              } absolute top-0 left-0  bg-green-500 h-full z-10 transition-all duration-500 ease-in-out`}
+            ></div>
           </div>
         )}
       </div>
       <div className="bg-white dark:bg-dark shadow-lg rounded-xl mamad sara ease-in-out p-5 mb-5">
-        <div
-          className={` relative p-3 flex justify-between items-center text-lg cursor-pointer ${
+        <button
+          aria-expanded={openAccordian}
+          className={` relative p-3 flex justify-between items-center text-lg cursor-pointer w-full ${
             openAccordian
-              ? "bg-sky-500 rounded-t-lg"
+              ? "bg-sky-700 rounded-t-lg"
               : "bg-sky-500/20 rounded-lg"
           }`}
           onClick={() => setOpenAccordian(!openAccordian)}
@@ -58,7 +87,7 @@ function Information({ courseId, courseTitle, amount, lessones, img, isBuy }) {
               openAccordian ? "rotate-180" : "rotate-0"
             }`}
           />
-        </div>
+        </button>
         <div
           ref={accordian}
           style={{
@@ -69,7 +98,7 @@ function Information({ courseId, courseTitle, amount, lessones, img, isBuy }) {
           className="dark:bg-primary-dark bg-gray-300 overflow-hidden rounded-b-lg transition-all duration-200 ease-in"
         >
           <ul className="flex flex-col justify-center items-start gap-5 p-5">
-            {lessones.length > 0 ? (
+            {lessones?.length > 0 ? (
               lessones.map((lesson, index) => (
                 <li
                   key={lesson._id}
@@ -82,7 +111,7 @@ function Information({ courseId, courseTitle, amount, lessones, img, isBuy }) {
                     <span>{lesson.title}</span>
                   </div>
                   {isBuy ? (
-                    <CiUnlock className="text-2xl text-sky-500" />
+                    <CiUnlock className="text-2xl text-sky-700" />
                   ) : lesson.isFree ? (
                     <CiUnlock className="text-2xl text-sky-500" />
                   ) : (

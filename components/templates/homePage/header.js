@@ -1,9 +1,17 @@
+"use client";
 import { CiPlay1 } from "react-icons/ci";
+import { motion } from "framer-motion";
 function Header() {
   return (
     <section className="header mt-15">
       <div className="container">
-        <div className="flex justify-center items-center gap-10 max-md:flex-col-reverse">
+        <motion.div
+          className="flex justify-center items-center gap-10 max-md:flex-col-reverse"
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+          viewport={{ once: true }}
+        >
           <div className=" w-120 -rotate-10 mt-20 rounded-4xl bg-white animate-float dark:bg-dark shadow-xl p-7 mamad sara ease-in-out max-md:mt-10 max-sm:w-80">
             <div className="animate-pulse w-full grid grid-cols-12 justify-between gap-3 h-full">
               <div className="col-span-8 flex flex-col gap-3 bg-gray-300 rounded-lg p-3">
@@ -68,8 +76,14 @@ function Header() {
               expand your knowledge and prepare for technical interviews.
             </p>
           </div>
-        </div>
-        <div className="flex justify-center items-center gap-30 max-md:flex-col max-md:gap-10">
+        </motion.div>
+        <motion.div
+          className="flex justify-center items-center gap-30 max-md:flex-col max-md:gap-10"
+          initial={{ opacity: 0, y: -60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+          viewport={{ once: true }}
+        >
           <div className="text-center font-bold -mt-20 text-white mamad sara ease-in-out max-md:mt-0">
             <h2 className=" text-3xl mb-3 mt-20 max-sm:text-2xl">
               Become Your Best
@@ -170,7 +184,7 @@ function Header() {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,9 +1,7 @@
 import React from "react";
-import orderModel from "@/models/order";
-import TableForDiscunt from "@/templates/p-admin/discunt/tableForDiscunt";
 import TableForOrder from "@/components/templates/p-admin/order/tableForOrder";
 import { getOrderForAdmin } from "@/lib/backend/utils/order";
-
+export const revalidate = 0;
 async function page() {
   const order = await getOrderForAdmin();
   return (

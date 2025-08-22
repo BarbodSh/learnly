@@ -1,9 +1,8 @@
 import React from "react";
-import ticketModel from "@/models/ticket";
 import TableForTicket from "@/components/templates/p-admin/ticket/tableForTicket";
 import { getUserInformation } from "@/lib/backend/utils/helper";
 import { getTicketForAdmin } from "@/lib/backend/utils/ticket";
-
+export const revalidate = 0;
 async function page() {
   const user = await getUserInformation();
   const ticket = await getTicketForAdmin();

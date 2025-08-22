@@ -2,7 +2,7 @@ import React from "react";
 import TableForCategory from "@/templates/p-admin/category/tableForCategory";
 import CategoryForm from "@/templates/p-admin/category/categoryForm";
 import { getCatgory } from "@/backend/utils/category";
-
+export const revalidate = 0;
 async function page() {
   const categories = await getCatgory();
   return (

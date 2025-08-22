@@ -57,7 +57,7 @@ function TableForCourse({ courses }) {
                 {course.price === 0 ? "Free" : course.price.toLocaleString()}
               </td>
               <td className="p-2">{course.support}</td>
-              <td className="p-2">{course.user.length}</td>
+              <td className="p-2">{course.user?.length}</td>
               <td className="p-2 cursor-pointer">
                 <div
                   className="border-1 border-sky-500 hover:bg-sky-500 transition-all duration-200 ease-in rounded-lg p-2"

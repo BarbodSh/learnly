@@ -58,7 +58,7 @@ function ShopSidebar({ discunt, userID }) {
         <p className="font-bold text-2xl mb-3">Total shopping cart</p>
         <div className="flex justify-between items-center opacity-60">
           <p>Total number of periods :</p>
-          <p>{cart.length}</p>
+          <p>{cart?.length}</p>
         </div>
       </div>
       <div className="flex justify-between items-center font-bold text-2xl mt-3">

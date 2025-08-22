@@ -3,7 +3,7 @@ import commentModel from "@/models/comment";
 import { getUserInformation } from "@/backend/utils/helper";
 import TableForComment from "@/templates/p-admin/comment/tableForComment";
 import { getCommentForAdmin } from "@/lib/backend/utils/comment";
-
+export const revalidate = 0;
 async function page() {
   const user = await getUserInformation();
   const comments = await getCommentForAdmin();

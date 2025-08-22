@@ -3,7 +3,7 @@ import courseModel from "@/models/course";
 import TableForLesson from "@/components/templates/p-admin/lesson/tableForLesson";
 import LessonForm from "@/components/templates/p-admin/lesson/lessonForm";
 import { getLesson } from "@/lib/backend/utils/lesson";
-
+export const revalidate = 0;
 async function page() {
   const resCourses = await courseModel.find({}, "title");
   const courses = JSON.parse(JSON.stringify(resCourses));

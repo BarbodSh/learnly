@@ -18,7 +18,7 @@ function CoursesContent({
   const searchParams = useSearchParams();
   const mainPage = searchParams.get("page") || "1";
   const { totalPages, startIndex, endIndex } = usePagination(
-    courses.length,
+    courses?.length,
     6,
     mainPage
   );
@@ -74,7 +74,7 @@ function CoursesContent({
               ></div>
             ))
           : categoryId
-          ? totalPages.map((page, index) => (
+          ? totalPages?.map((page, index) => (
               <Pagination
                 key={index}
                 href={`/courses/${categoryId}?page=${page}`}
@@ -82,7 +82,7 @@ function CoursesContent({
                 mainPage={mainPage}
               />
             ))
-          : totalPages.map((page, index) => (
+          : totalPages?.map((page, index) => (
               <Pagination
                 key={index}
                 href={`/courses?page=${page}`}

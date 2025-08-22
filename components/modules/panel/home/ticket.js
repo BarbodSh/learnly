@@ -12,7 +12,7 @@ async function Ticket({ userID }) {
         <span className="text-lg">Last Tickets:</span>
       </div>
       <div className="flex flex-col justify-center items-center gap-3 mt-3">
-        {tickets.length > 0 ? (
+        {tickets?.length > 0 ? (
           tickets
             .slice(-4)
             .reverse()

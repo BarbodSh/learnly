@@ -11,7 +11,15 @@ import CommentForm from "@/components/modules/comment/commentForm";
 import { FaStar } from "react-icons/fa";
 import { FaRegStar } from "react-icons/fa";
 import SimilarCourses from "./similarCourses";
-function Content({ course, teacher, username, averageScore, similarCourse }) {
+import { motion } from "framer-motion";
+function Content({
+  course,
+  teacher,
+  username,
+  averageScore,
+  similarCourse,
+  wishList,
+}) {
   const [menu, setMenu] = useState("Information");
 
   const trueComments = course.comments.filter(
@@ -19,7 +27,7 @@ function Content({ course, teacher, username, averageScore, similarCourse }) {
   );
 
   return (
-    <div className="col-span-8 max-sm:col-span-12">
+    <div className="col-span-8 max-sm:col-span-12 ">
       <div className="bg-white mb-5 dark:bg-dark shadow-lg rounded-xl p-3 flex justify-start items-center gap-7  text-xl max-sm:text-lg font-bold mamad sara ease-in-out">
         <div className="relative cursor-pointer group">
           <span
@@ -52,10 +60,13 @@ function Content({ course, teacher, username, averageScore, similarCourse }) {
           </span>
         </div>
       </div>
-      <div
+      <motion.div
         className={`grid grid-cols-12 gap-5 w-full transition-all sara ease-in-out overflow-hidden ${
           menu === "Information" ? "block" : "hidden"
         }`}
+        initial={{ opacity: 0, x: 40 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
       >
         <div className="col-span-4 flex justify-center items-center gap-3 p-5 rounded-lg shadow-lg bg-white dark:bg-dark mamad sara ease-in-out max-lg:col-span-6 max-sm:col-span-12">
           <LuTimer className="text-5xl" />
@@ -97,7 +108,7 @@ function Content({ course, teacher, username, averageScore, similarCourse }) {
           <PiStudentBold className="text-5xl" />
           <div>
             <span className="text-lg block">Student :</span>
-            <span className="max-sm:text-lg">{course.user.length}</span>
+            <span className="max-sm:text-lg">{course.user?.length}</span>
           </div>
         </div>
         <div className="col-span-4 flex justify-center items-center gap-3 p-5 rounded-lg shadow-lg bg-white dark:bg-dark mamad sara ease-in-out max-lg:col-span-6 max-sm:col-span-12">
@@ -119,22 +130,29 @@ function Content({ course, teacher, username, averageScore, similarCourse }) {
             </span>
           </div>
         </div>
-      </div>
-      <div
+      </motion.div>
+      <motion.div
         className={`bg-white dark:bg-dark mamad sara ease-in-out p-5 rounded-lg overflow-hidden ${
           menu === "Comment" ? "block" : "hidden"
         }`}
+        initial={{ opacity: 0, x: 40 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
       >
         <CommentForm username={username} courseID={course._id} />
-        {trueComments.length > 0 ? (
+        {trueComments?.length > 0 ? (
           <div className="mt-5 bg-white dark:bg-dark mamad sara ease-in-out p-5 rounded-lg flex flex-col justify-center items-start gap-4">
             {course.comments.map((comment) =>
               comment.isShow ? <Comment key={comment._id} {...comment} /> : null
             )}
           </div>
         ) : null}
-      </div>
-      <SimilarCourses status={menu} similarCourse={similarCourse} />
+      </motion.div>
+      <SimilarCourses
+        wishList={wishList}
+        status={menu}
+        similarCourse={similarCourse}
+      />
     </div>
   );
 }

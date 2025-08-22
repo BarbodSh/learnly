@@ -4,9 +4,9 @@ import { getUserInformation } from "@/backend/utils/helper";
 import { FaHome } from "react-icons/fa";
 import { TbArrowBigRightLineFilled } from "react-icons/tb";
 import Link from "next/link";
-
 import CoursesWrapper from "@/components/templates/courses/coursesWrapper";
 import Footer from "@/components/modules/footer/footer";
+export const revalidate = 0;
 async function page() {
   const res = await getUserInformation();
   const user = JSON.parse(JSON.stringify(res));

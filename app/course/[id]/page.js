@@ -2,7 +2,7 @@ import Navbar from "@/modules/navbar/navbar";
 import React from "react";
 import { getUserInformation } from "@/lib/backend/utils/helper";
 import { FaHome } from "react-icons/fa";
-import { TbArrowBigRightLineFilled, TbVersionsOff } from "react-icons/tb";
+import { TbArrowBigRightLineFilled } from "react-icons/tb";
 import { TbArrowBigRightLinesFilled } from "react-icons/tb";
 import Link from "next/link";
 import Information from "@/components/templates/course/information";
@@ -15,6 +15,7 @@ import mongoose from "mongoose";
 import NotFound from "@/app/not-found";
 import { calculateScore } from "@/lib/frontend/utils/helper";
 import Footer from "@/components/modules/footer/footer";
+import { getWishlist } from "@/lib/backend/utils/wishList";
 async function page({ params }) {
   params = await params;
   if (!mongoose.Types.ObjectId.isValid(params.id)) {
@@ -49,11 +50,11 @@ async function page({ params }) {
   const course = JSON.parse(JSON.stringify(resCourse));
 
   let averageScore = 5;
-  if (course.comments.length > 0) {
+  if (course.comments?.length > 0) {
     const trueComments = course.comments.filter(
       (comment) => comment.isShow === true
     );
-    if (trueComments.length > 0) averageScore = calculateScore(course);
+    if (trueComments?.length > 0) averageScore = calculateScore(course);
   }
 
   const resSimilarCourse = await courseModel.find({
@@ -63,18 +64,18 @@ async function page({ params }) {
   const similarCourse = allSimilarCourse.filter(
     (similarCourse) => similarCourse._id !== course._id
   );
-  const res = await getUserInformation();
-  const user = JSON.parse(JSON.stringify(res));
+  const user = await getUserInformation();
+  const wishList = await getWishlist(user._id);
 
   const isBuy = course.user.some((student) => student === user._id);
 
   return (
     <div className="min-h-screen flex flex-col justify-between">
       <Navbar isLogin={user} />
-      <div className="mt-20 max-md:mt-5 mb-10">
+      <div className="mt-10 max-md:mt-5 mb-10">
         <div className="container">
           <div className="bg-white flex justify-start items-center shadow-lg gap-5 dark:bg-dark w-full p-3 rounded-2xl mb-5 mamad sara ease-in-out max-sm:gap-1">
-            <Link href="/">
+            <Link href="/" aria-label="home-icon">
               <FaHome className="dark:text-white text-3xl max-sm:text-xl" />
             </Link>
             <div href="/">
@@ -157,6 +158,7 @@ async function page({ params }) {
               username={user._id}
               averageScore={averageScore}
               similarCourse={similarCourse}
+              wishList={wishList}
             />
           </div>
         </div>

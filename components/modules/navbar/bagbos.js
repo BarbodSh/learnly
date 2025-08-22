@@ -37,7 +37,7 @@ function Bagbox({ bagModal }) {
       >
         <ul className="dark:text-white flex flex-col gap-2 justify-start items-start w-full">
           <div className="cart-container flex flex-col gap-2 justify-start items-start w-full overflow-y-auto">
-            {cart.length > 0 ? (
+            {cart?.length > 0 ? (
               cart.map((course) => (
                 <li
                   key={course.id}
@@ -70,7 +70,7 @@ function Bagbox({ bagModal }) {
               </li>
             )}
           </div>
-          {cart.length > 0 ? (
+          {cart?.length > 0 ? (
             <Link href="/shoppingCart" className="w-full mt-3">
               <div className="rounded-lg bg-sky-500 p-2 w-full text-center cursor-pointer">
                 View shopping cart

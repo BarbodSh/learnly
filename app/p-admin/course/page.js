@@ -1,14 +1,12 @@
 import React from "react";
 import userModel from "@/models/user";
-import categorryModel from "@/models/category";
 import TableForCourse from "@/templates/p-admin/course/tableForCourse";
 import CourseForm from "@/templates/p-admin/course/courseForm";
 import { getCourseForAdmin } from "@/backend/utils/course";
 import { getCatgory } from "@/lib/backend/utils/category";
-
+export const revalidate = 0;
 async function page() {
   const resUsers = await userModel.find({ role: "admin" }, "username");
-  const resCategories = await categorryModel.find({}, "title");
 
   const courses = await getCourseForAdmin();
   const teachers = JSON.parse(JSON.stringify(resUsers));

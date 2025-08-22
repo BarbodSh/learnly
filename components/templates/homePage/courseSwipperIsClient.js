@@ -1,10 +1,9 @@
 "use client";
-import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import CourseSwiper from "./courseSwiper";
 import { getCourse } from "@/lib/frontend/utils/course";
 
-function CourseSwipperIsClient() {
+function CourseSwipperIsClient({ wishList }) {
   const [course, setCourse] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -14,6 +13,7 @@ function CourseSwipperIsClient() {
   return (
     <div>
       <CourseSwiper
+        wishList={wishList}
         courses={course}
         title={"Favorite title"}
         slider={4}

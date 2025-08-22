@@ -31,23 +31,23 @@ function PcNavbar({
     >
       <div>
         <ul className="flex justify-strat items-center gap-5 text-xl font-bold">
-          {category.length === 0
+          {category?.length === 0
             ? Array.from({ length: 4 }, (_, i) => i + 1).map((i, index) => (
-                <div
+                <li
+                  aria-label="loadingHeader"
                   className="bg-gray-200 rounded-2xl w-25 h-8 animate-pulse"
                   key={index}
-                ></div>
+                ></li>
               ))
             : category.map((category) => (
-                <Link
-                  key={category._id}
-                  className="relative"
-                  href={`/courses/${category._id}`}
-                  onClick={() => {
-                    setMainCategory(category.title);
-                  }}
-                >
-                  <li className="relative group">
+                <li className="relative group" key={category._id}>
+                  <Link
+                    className="relative"
+                    href={`/courses/${category._id}`}
+                    onClick={() => {
+                      setMainCategory(category.title);
+                    }}
+                  >
                     <span
                       className={`before:absolute before:content-[''] before:h-1 before:w-full before:rounded-2xl before:-bottom-1 before:left-0 group-hover:before:w-full before:transition-all before:duration-200 before:ease-in ${
                         slug === category._id ? "before:bg-sky-500" : ""
@@ -55,8 +55,8 @@ function PcNavbar({
                     >
                       {category.title}
                     </span>
-                  </li>
-                </Link>
+                  </Link>
+                </li>
               ))}
         </ul>
       </div>

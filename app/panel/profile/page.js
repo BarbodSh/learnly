@@ -1,7 +1,7 @@
 import { getUserInformation } from "@/backend/utils/helper";
 import ProfileDetails from "@/components/modules/panel/profile/profileDetails";
 import React from "react";
-
+export const revalidate = 0;
 async function page() {
   const user = await getUserInformation();
 

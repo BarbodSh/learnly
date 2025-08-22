@@ -27,7 +27,7 @@ function InformationAboutItem({ useDiscunt }) {
   };
   return (
     <div className="bg-white dark:bg-dark p-5 border-1 border-dark/20 dark:border-white/20 mt-5">
-      {cart.length > 0 ? (
+      {cart?.length > 0 ? (
         <table className="w-full text-sm dark:text-white mb-10">
           <thead className="text-xs uppercase bg-gray-200 dark:bg-gray-700">
             <tr className="">

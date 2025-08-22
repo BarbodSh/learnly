@@ -2,7 +2,7 @@ import React from "react";
 import TableForDiscunt from "@/templates/p-admin/discunt/tableForDiscunt";
 import DiscuntForm from "@/templates/p-admin/discunt/discuntForm";
 import { getDiscunt } from "@/backend/utils/discunt";
-
+export const revalidate = 0;
 async function page() {
   const discunt = await getDiscunt();
   return (
