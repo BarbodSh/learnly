@@ -2,6 +2,7 @@ import connectToDB from "@/lib/backend/configs/db";
 import { removeWishList } from "@/lib/backend/utils/wishList";
 import { validateID } from "@/lib/validator/helper";
 import { NextResponse } from "next/server";
+import wishListModel from "@/models/wishList";
 
 export async function DELETE(req, { params }) {
   try {
@@ -28,6 +29,23 @@ export async function DELETE(req, { params }) {
         status: 500,
         headers: { "Content-Type": "application/json" },
       }
+    );
+  }
+}
+
+export async function GET(req, { params }) {
+  await connectToDB();
+  try {
+    const { id } = await params;
+    const wishList = await wishListModel.find({ user: id });
+    return Response.json(
+      { message: "successfully", wishList },
+      { status: 200 }
+    );
+  } catch (err) {
+    return Response.json(
+      { error: "خطای داخلی سرور." },
+      { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
 }

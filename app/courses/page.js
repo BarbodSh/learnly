@@ -4,9 +4,9 @@ import { getUserInformation } from "@/backend/utils/helper";
 import { FaHome } from "react-icons/fa";
 import { TbArrowBigRightLineFilled } from "react-icons/tb";
 import Link from "next/link";
+
 import CoursesWrapper from "@/components/templates/courses/coursesWrapper";
 import Footer from "@/components/modules/footer/footer";
-export const revalidate = 0;
 async function page() {
   const res = await getUserInformation();
   const user = JSON.parse(JSON.stringify(res));
@@ -15,7 +15,7 @@ async function page() {
       <Navbar isLogin={user} />
       <div className="mt-20 max-md:mt-5 mb-30 ">
         <div className="container">
-          <div className="bg-white flex justify-start items-center shadow-lg gap-5 dark:bg-dark w-full p-3 rounded-2xl mb-5 mamad sara ease-in-out max-sm:gap-1">
+          <div className="bg-white flex justify-start items-center shadow-lg gap-5 dark:bg-dark w-full p-3 rounded-2xl mb-10 mamad sara ease-in-out max-sm:gap-1">
             <Link href="/">
               <FaHome className="dark:text-white text-3xl max-sm:text-xl" />
             </Link>
@@ -29,7 +29,7 @@ async function page() {
               Courses
             </Link>
           </div>
-          <CoursesWrapper />
+          <CoursesWrapper userId={user._id} />
         </div>
       </div>
       <Footer />

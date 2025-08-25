@@ -3,40 +3,44 @@ import React, { useEffect, useState } from "react";
 import CourseFilter from "./courseFilter";
 import CoursesContent from "./coursesContent";
 import { getCourse } from "@/frontend/utils/course";
+import { useSearchParams } from "next/navigation";
+import { getAllWishList } from "@/lib/frontend/utils/wishList";
 
-function CoursesWrapper() {
+function CoursesWrapper({ userId }) {
   const [courses, setCourses] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [filter, setFilter] = useState("All");
+  const [wishList, setWishList] = useState([]);
+  const searchParams = useSearchParams();
+  const [filter, setFilter] = useState({
+    title: "",
+    priceFrom: null,
+    priceTo: null,
+  });
 
   useEffect(() => {
-    getCourse(setCourses, setIsLoading);
-  }, []);
+    const title = searchParams.get("title");
+    const priceFrom = searchParams.get("priceFrom");
+    const priceTo = searchParams.get("priceTo");
+    setFilter((prev) => ({
+      ...prev,
+      ...(title ? { title } : { title: "" }),
+      ...(priceFrom ? { priceFrom: Number(priceFrom) } : {}),
+      ...(priceTo ? { priceTo: Number(priceTo) } : {}),
+    }));
+  }, [searchParams]);
 
-  const getFilteredCourses = () => {
-    switch (filter) {
-      case "Free":
-        return courses.filter((course) => course.price === 0);
-      case "Premium":
-        return courses.sort((a, b) => b.price - a.price);
-      case "Cheap":
-        return courses.sort((a, b) => a.price - b.price);
-      case "Random":
-        return courses.sort(() => 0.5 - Math.random());
-      default:
-        return courses;
-    }
-  };
-
-  const filteredCourses = getFilteredCourses();
+  useEffect(() => {
+    getCourse(setCourses, setIsLoading, filter);
+    getAllWishList(setWishList, userId);
+  }, [filter]);
 
   return (
     <div className="grid grid-cols-12 gap-5">
-      <CourseFilter value={filter} setValue={setFilter} />
+      <CourseFilter />
       <CoursesContent
-        courses={filteredCourses}
+        courses={courses}
         isLoading={isLoading}
-        filter={filter}
+        wishList={wishList}
       />
     </div>
   );

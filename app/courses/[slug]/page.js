@@ -10,7 +10,7 @@ import { notFound } from "next/navigation";
 import CoursesInCategoryWrapper from "@/components/templates/courses/coursesInCategoryWrapper";
 import Footer from "@/components/modules/footer/footer";
 import { rules } from "@/lib/validator/rules";
-export const revalidate = 0;
+import { getUserInformation } from "@/lib/backend/utils/helper";
 async function page({ params }) {
   const param = await params;
   if (!rules.objectId.validate(param.slug)) {
@@ -19,6 +19,8 @@ async function page({ params }) {
   }
   const resCategory = await categoryModel.findOne({ _id: param.slug });
   const category = JSON.parse(JSON.stringify(resCategory));
+  const res = await getUserInformation();
+  const user = JSON.parse(JSON.stringify(res));
   return (
     <div className="min-h-screen flex flex-col justify-between">
       <Navbar slug={param.slug} />
@@ -49,7 +51,7 @@ async function page({ params }) {
             <div></div>
             <div></div>
           </div>
-          <CoursesInCategoryWrapper />
+          <CoursesInCategoryWrapper userId={user._id} />
         </div>
       </div>
       <Footer />

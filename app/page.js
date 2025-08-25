@@ -9,7 +9,6 @@ import connectToDB from "@/lib/backend/configs/db";
 import CourseSwipperIsClient from "@/components/templates/homePage/courseSwipperIsClient";
 import { getUserInformation } from "@/lib/backend/utils/helper";
 import { getWishlist } from "@/lib/backend/utils/wishList";
-export const revalidate = 0;
 
 export default async function Home() {
   await connectToDB();
@@ -20,7 +19,7 @@ export default async function Home() {
   return (
     <>
       <Navbar />
-      <div className="bg-[url('https://sabzlearn.ir/wp-content/themes/sabzlearn-theme/images/hero-section.webp')] -mt-24 pt-5 min-h-210 bg-no-repeat pb-10 bg-cover bg-bottom relative">
+      <div className="bg-[url('/images/hero-section.webp')] -mt-24 pt-5 min-h-210 bg-no-repeat pb-10 bg-cover bg-bottom relative">
         <Header />
       </div>
       <Main courses={courses} wishList={wishList} />

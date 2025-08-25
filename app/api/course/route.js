@@ -21,10 +21,31 @@ export async function POST(req) {
   }
 }
 
-export async function GET() {
+export async function GET(req) {
   await connectToDB();
   try {
-    const courses = await courseModel.find();
+    const query = {};
+    const { searchParams } = new URL(req.url);
+
+    const title = searchParams.get("title")?.trim();
+    const priceFromRaw = searchParams.get("priceFrom");
+    const priceToRaw = searchParams.get("priceTo");
+
+    const priceFrom = priceFromRaw ? Number(priceFromRaw) : null;
+    const priceTo = priceToRaw ? Number(priceToRaw) : null;
+
+    if (title) {
+      query.title = { $regex: title, $options: "i" };
+    }
+
+    if (priceFrom !== null || priceTo !== null) {
+      query.price = {};
+      if (priceFrom !== null) query.price.$gte = priceFrom;
+      if (priceTo !== null) query.price.$lte = priceTo;
+    }
+    console.log(query);
+    const courses = await courseModel.find(query);
+    console.log(courses);
     return Response.json({ message: "successfully", courses }, { status: 200 });
   } catch (err) {
     return Response.json(

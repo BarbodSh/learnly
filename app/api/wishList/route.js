@@ -25,7 +25,3 @@ export async function POST(req) {
     );
   }
 }
-
-export async function GET() {
-  await connectToDB();
-}
