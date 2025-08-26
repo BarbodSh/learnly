@@ -18,7 +18,7 @@ function CoursesContent({
   const searchParams = useSearchParams();
   const mainPage = searchParams.get("page") || "1";
   const { totalPages, startIndex, endIndex } = usePagination(
-    courses.length,
+    courses?.length,
     6,
     mainPage
   );

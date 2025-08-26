@@ -50,11 +50,11 @@ async function page({ params }) {
   const course = JSON.parse(JSON.stringify(resCourse));
 
   let averageScore = 5;
-  if (course.comments.length > 0) {
+  if (course.comments?.length > 0) {
     const trueComments = course.comments.filter(
       (comment) => comment.isShow === true
     );
-    if (trueComments.length > 0) averageScore = calculateScore(course);
+    if (trueComments?.length > 0) averageScore = calculateScore(course);
   }
 
   const resSimilarCourse = await courseModel.find({

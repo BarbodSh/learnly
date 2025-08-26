@@ -43,9 +43,7 @@ export async function GET(req) {
       if (priceFrom !== null) query.price.$gte = priceFrom;
       if (priceTo !== null) query.price.$lte = priceTo;
     }
-    console.log(query);
     const courses = await courseModel.find(query);
-    console.log(courses);
     return Response.json({ message: "successfully", courses }, { status: 200 });
   } catch (err) {
     return Response.json(

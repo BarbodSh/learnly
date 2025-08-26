@@ -58,7 +58,8 @@ function CourseBox({
   useEffect(() => {
     if (wishList) {
       const inWishlist = wishList?.find((wish) => wish.course._id === _id);
-      setIsWishlist(inWishlist || false);
+      const inWishLists = wishList?.find((wish) => wish.course === _id);
+      setIsWishlist(inWishlist || inWishLists || false);
     }
   }, [wishList, _id]);
 
