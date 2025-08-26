@@ -4,11 +4,7 @@ import Image from "next/image";
 import { FaRegUser } from "react-icons/fa";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import {
-  getMe,
-  showErrorSwal,
-  showSuccessSwal,
-} from "@/lib/frontend/utils/helper";
+import { showErrorSwal, showSuccessSwal } from "@/lib/frontend/utils/helper";
 import { addToWishList, removeFromWishlist } from "@/frontend/utils/wishList";
 import { allStatus } from "@/lib/frontend/utils/status";
 import { useRouter } from "next/navigation";
@@ -23,22 +19,25 @@ function CourseBox({
   _id,
   colspan,
   wishList,
+  userId,
+  isLoading,
+  callBack,
 }) {
-  const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [isWishlist, setIsWishlist] = useState(false);
   const [isLoadingForRemove, setIsLoadingForRemove] = useState(false);
   const [isLoadingForAdd, setIsLoadingForAdd] = useState(false);
   const router = useRouter();
-
   const addToWishListHandler = async () => {
-    if (!user) {
+    if (!userId) {
       return showErrorSwal("please lohin");
     }
     setIsLoadingForAdd(true);
-    const res = await addToWishList(user.id, _id);
+    const res = await addToWishList(userId, _id);
     if (res.status === 200) {
       setIsLoadingForAdd(false);
+      if (callBack) {
+        callBack();
+      }
       router.refresh();
       return showSuccessSwal("course add to wish list");
     }
@@ -52,10 +51,6 @@ function CourseBox({
   };
 
   useEffect(() => {
-    getMe(setUser, setIsLoading);
-  }, []);
-
-  useEffect(() => {
     if (wishList) {
       const inWishlist = wishList?.find((wish) => wish.course._id === _id);
       const inWishLists = wishList?.find((wish) => wish.course === _id);
@@ -65,10 +60,13 @@ function CourseBox({
 
   const removeFromWishListHandler = async () => {
     setIsLoadingForRemove(true);
-    const res = await removeFromWishlist(_id, user.id);
+    const res = await removeFromWishlist(_id, userId);
     if (res.status === 200) {
       setIsLoadingForRemove(false);
       router.refresh();
+      if (callBack) {
+        callBack();
+      }
       return showSuccessSwal("course remove from wish list is successfully");
     }
     setIsLoadingForRemove(false);

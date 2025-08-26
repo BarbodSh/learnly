@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import CourseBox from "@/modules/courseBox/courseBox";
 
-async function Main({ courses, wishList }) {
+async function Main({ courses, wishList, user }) {
   return (
     <section className="main mb-30">
       <div className="container">
@@ -21,6 +21,7 @@ async function Main({ courses, wishList }) {
               colspan={"col-span-3"}
               {...course}
               wishList={wishList}
+              userId={user?._id}
             />
           ))}
         </div>

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -8,8 +8,14 @@ import "swiper/css/pagination";
 import CourseBox from "@/modules/courseBox/courseBox";
 import Link from "next/link";
 import CoursesBoxLoading from "@/components/modules/courseBox/coursesBoxLoading";
+import { getMe } from "@/lib/frontend/utils/helper";
 
 function CourseSwiper({ courses, title, slider, isLoading, wishList }) {
+  const [user, setUser] = useState(null);
+  const [isLoadingForUser, setIsLoadingForUser] = useState(true);
+  useEffect(() => {
+    getMe(setUser, setIsLoadingForUser);
+  }, []);
   return (
     <section className="mb-30">
       <div className="container">
@@ -57,7 +63,13 @@ function CourseSwiper({ courses, title, slider, isLoading, wishList }) {
           ) : (
             courses?.map((course) => (
               <SwiperSlide>
-                <CourseBox key={course._id} {...course} wishList={wishList} />
+                <CourseBox
+                  key={course._id}
+                  {...course}
+                  wishList={wishList}
+                  userId={user?.id}
+                  isLoading={isLoadingForUser}
+                />
               </SwiperSlide>
             ))
           )}

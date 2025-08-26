@@ -2,7 +2,7 @@
 import CourseBox from "@/modules/courseBox/courseBox";
 import CoursesBoxLoading from "@/modules/courseBox/coursesBoxLoading";
 import { getMe } from "@/frontend/utils/helper";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import Pagination from "@/modules/pagination/pagination";
 import usePagination from "@/hooks/pagination";
 import { useSearchParams } from "next/navigation";
@@ -18,13 +18,15 @@ function CoursesContent({
   const searchParams = useSearchParams();
   const mainPage = searchParams.get("page") || "1";
   const { totalPages, startIndex, endIndex } = usePagination(
-    courses?.length,
+    courses?.length || [],
     6,
     mainPage
   );
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
+  const callBack = () => {
+    location.reload();
+  };
   useEffect(() => {
     getMe(setUser, setIsLoading);
   }, []);
@@ -50,12 +52,13 @@ function CoursesContent({
             ?.slice(startIndex, endIndex)
             .map((course) => (
               <CourseBox
-                userID={user?.id}
+                userId={user?.id}
                 key={course._id}
                 _id={course._id}
                 wishList={wishList}
                 colspan={"col-span-4"}
                 isLoading={isLoading}
+                callBack={callBack}
                 {...course}
               />
             ))
