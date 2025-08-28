@@ -27,6 +27,15 @@ function CourseBox({
   const [isLoadingForRemove, setIsLoadingForRemove] = useState(false);
   const [isLoadingForAdd, setIsLoadingForAdd] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    if (wishList) {
+      const inWishlist = wishList?.find((wish) => wish.course._id === _id);
+      const inWishLists = wishList?.find((wish) => wish.course === _id);
+      setIsWishlist(inWishlist || inWishLists || false);
+    }
+  }, [wishList, _id]);
+
   const addToWishListHandler = async () => {
     if (!userId) {
       return showErrorSwal("please lohin");
@@ -34,10 +43,8 @@ function CourseBox({
     setIsLoadingForAdd(true);
     const res = await addToWishList(userId, _id);
     if (res.status === 200) {
+      setIsWishlist(true);
       setIsLoadingForAdd(false);
-      if (callBack) {
-        callBack();
-      }
       router.refresh();
       return showSuccessSwal("course add to wish list");
     }
@@ -50,23 +57,13 @@ function CourseBox({
     return resStatus;
   };
 
-  useEffect(() => {
-    if (wishList) {
-      const inWishlist = wishList?.find((wish) => wish.course._id === _id);
-      const inWishLists = wishList?.find((wish) => wish.course === _id);
-      setIsWishlist(inWishlist || inWishLists || false);
-    }
-  }, [wishList, _id]);
-
   const removeFromWishListHandler = async () => {
     setIsLoadingForRemove(true);
     const res = await removeFromWishlist(_id, userId);
     if (res.status === 200) {
+      setIsWishlist(false);
       setIsLoadingForRemove(false);
       router.refresh();
-      if (callBack) {
-        callBack();
-      }
       return showSuccessSwal("course remove from wish list is successfully");
     }
     setIsLoadingForRemove(false);

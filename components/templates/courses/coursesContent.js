@@ -42,7 +42,7 @@ function CoursesContent({
 
   return (
     <>
-      <div className="col-span-8 grid grid-cols-12 justify-center items-center gap-5 max-md:col-span-12">
+      <div className="col-span-8 grid grid-cols-12 justify-center items-center gap-7 max-md:col-span-12">
         {loadingForCourse ? (
           Array.from({ length: 6 }, (_, i) => i + 1).map((arr, index) => (
             <CoursesBoxLoading key={index} />

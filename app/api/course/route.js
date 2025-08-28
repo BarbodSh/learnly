@@ -28,21 +28,24 @@ export async function GET(req) {
     const { searchParams } = new URL(req.url);
 
     const title = searchParams.get("title")?.trim();
-    const priceFromRaw = searchParams.get("priceFrom");
-    const priceToRaw = searchParams.get("priceTo");
-
-    const priceFrom = priceFromRaw ? Number(priceFromRaw) : null;
-    const priceTo = priceToRaw ? Number(priceToRaw) : null;
+    const priceFrom = searchParams.get("priceFrom");
+    const priceTo = searchParams.get("priceTo");
 
     if (title) {
       query.title = { $regex: title, $options: "i" };
     }
-
-    if (priceFrom !== null || priceTo !== null) {
+    console.log(priceFrom, priceTo);
+    console.log(title);
+    if (priceFrom || priceTo) {
       query.price = {};
-      if (priceFrom !== null) query.price.$gte = priceFrom;
-      if (priceTo !== null) query.price.$lte = priceTo;
+      if (priceFrom && priceFrom !== "" && priceFrom !== "null") {
+        query.price.$gte = Number(priceFrom);
+      }
+      if (priceTo && priceTo !== "" && priceTo !== "null") {
+        query.price.$lte = Number(priceTo);
+      }
     }
+    console.log(query);
     const courses = await courseModel.find(query);
     return Response.json({ message: "successfully", courses }, { status: 200 });
   } catch (err) {

@@ -11,28 +11,15 @@ function CoursesWrapper({ userId }) {
   const [isLoading, setIsLoading] = useState(true);
   const [wishList, setWishList] = useState([]);
   const searchParams = useSearchParams();
-  const [filter, setFilter] = useState({
-    title: "",
-    priceFrom: null,
-    priceTo: null,
-  });
 
   useEffect(() => {
-    const title = searchParams.get("title");
-    const priceFrom = searchParams.get("priceFrom");
-    const priceTo = searchParams.get("priceTo");
-    setFilter((prev) => ({
-      ...prev,
-      ...(title ? { title } : { title: "" }),
-      ...(priceFrom ? { priceFrom: Number(priceFrom) } : {}),
-      ...(priceTo ? { priceTo: Number(priceTo) } : {}),
-    }));
-  }, [searchParams]);
+    const title = searchParams.get("title") || "";
+    const priceFrom = searchParams.get("priceFrom") || "";
+    const priceTo = searchParams.get("priceTo") || "";
 
-  useEffect(() => {
-    getCourse(setCourses, setIsLoading, filter);
+    getCourse(setCourses, setIsLoading, { title, priceFrom, priceTo });
     getAllWishList(setWishList, userId);
-  }, [filter]);
+  }, [searchParams]);
 
   return (
     <div className="grid grid-cols-12 gap-5">

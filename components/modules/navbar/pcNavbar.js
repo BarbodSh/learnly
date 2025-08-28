@@ -22,7 +22,7 @@ function PcNavbar({
   const [searchModal, setSearchModal] = useState(false);
   const [profileModal, setProfileModal] = useState(false);
   const [bagModal, setBagModal] = useState(false);
-  const [mainCategory, setMainCategory] = useState("");
+
   return (
     <div
       className={`pc-navbar relative z-30 flex justify-between items-center bg-white p-5 dark:bg-dark dark:text-white mamad sara ease-in-out max-md:hidden 
@@ -41,13 +41,7 @@ function PcNavbar({
               ))
             : category.map((category) => (
                 <li className="relative group" key={category._id}>
-                  <Link
-                    className="relative"
-                    href={`/courses/${category._id}`}
-                    onClick={() => {
-                      setMainCategory(category.title);
-                    }}
-                  >
+                  <Link className="relative" href={`/courses/${category._id}`}>
                     <span
                       className={`before:absolute before:content-[''] before:h-1 before:w-full before:rounded-2xl before:-bottom-1 before:left-0 group-hover:before:w-full before:transition-all before:duration-200 before:ease-in ${
                         slug === category._id ? "before:bg-sky-500" : ""
