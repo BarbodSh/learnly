@@ -2,11 +2,12 @@
 
 import React, { useEffect, useState } from "react";
 
-import { applyTheme, getSavedTheme } from "@/lib/frontend/navbar/navbar";
+import { applyTheme, getSavedTheme } from "@/frontend/navbar/navbar";
 import MobileNavbarPanel from "./mobileNavbarPanel";
 import PCNavbarPanel from "./pcNavbarPanel";
+import { removeUserNotification } from "@/frontend/utils/notification";
 
-function NavbarPanel({ username }) {
+function NavbarPanel({ username, notification, userId }) {
   const [theme, setTheme] = useState("");
 
   useEffect(() => {
@@ -28,6 +29,8 @@ function NavbarPanel({ username }) {
           toggleTheme={toggleTheme}
           theme={theme}
           username={username}
+          notification={notification}
+          userId={userId}
         />
         <MobileNavbarPanel
           toggleTheme={toggleTheme}

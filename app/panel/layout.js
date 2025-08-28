@@ -3,6 +3,7 @@ import PanelSidebar from "@/modules/panelSidebar/panelSidebar";
 import { getUserInformation } from "@/backend/utils/helper";
 import React from "react";
 import { redirect } from "next/navigation";
+import { getUserNotification } from "@/lib/backend/utils/notification";
 
 async function layout({ children }) {
   const res = await getUserInformation();
@@ -11,6 +12,8 @@ async function layout({ children }) {
   }
 
   const user = JSON.parse(JSON.stringify(res));
+
+  const notification = await getUserNotification(user._id);
   return (
     <section>
       <div className="container">
@@ -19,7 +22,11 @@ async function layout({ children }) {
             <PanelSidebar username={user.username} />
           </div>
           <div className="col-span-8">
-            <NavbarPanel username={user.username} />
+            <NavbarPanel
+              userId={user._id}
+              username={user.username}
+              notification={notification}
+            />
             {children}
           </div>
         </div>

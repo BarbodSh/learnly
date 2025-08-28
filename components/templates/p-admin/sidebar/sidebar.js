@@ -52,6 +52,12 @@ function AdminSidebar({ username }) {
             onClick={setSidebar}
           />
           <LinkForSidebar
+            name={"Notification"}
+            link={"/p-admin/notification"}
+            active={sidebar}
+            onClick={setSidebar}
+          />
+          <LinkForSidebar
             name={"Category"}
             link={"/p-admin/category"}
             active={sidebar}

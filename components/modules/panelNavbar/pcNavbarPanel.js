@@ -5,9 +5,23 @@ import { BsMoonStars } from "react-icons/bs";
 import { IoNotificationsOutline } from "react-icons/io5";
 import Link from "next/link";
 import { MdDeleteOutline } from "react-icons/md";
+import { removeUserNotification } from "@/frontend/utils/notification";
+import { showSuccessSwal } from "@/lib/frontend/utils/helper";
+import { useRouter } from "next/navigation";
 
-function PcNavbarPanel({ toggleTheme, theme, username }) {
+function PcNavbarPanel({ toggleTheme, theme, username, notification, userId }) {
   const [notifeModal, setNotefiModal] = useState(false);
+  const router = useRouter();
+  const removeNotifeHandler = async (notifeId) => {
+    const res = await removeUserNotification(userId, notifeId);
+    if (res.status === 200) {
+      showSuccessSwal("remove notife is successfully");
+      return router.refresh();
+    }
+    const resStatus = allStatus(res);
+    return resStatus;
+  };
+
   return (
     <div className="pc-navbar w-full relative z-30 flex justify-between items-center bg-white p-5 mt-5 shadow-xl dark:bg-dark dark:text-white mamad sara ease-in-out max-md:hidden border-1 border-dark/20 dark:border-white/20">
       <div className="flex justify-start items-center gap-2">
@@ -24,10 +38,15 @@ function PcNavbarPanel({ toggleTheme, theme, username }) {
           ) : (
             <BsMoonStars className="cursor-pointer" onClick={toggleTheme} />
           )}
-          <IoNotificationsOutline
-            className="cursor-pointer"
+          <div
+            className="relative cursor-pointer"
             onClick={() => setNotefiModal(!notifeModal)}
-          />
+          >
+            <IoNotificationsOutline />
+            {notification?.length > 0 ? (
+              <div className="absolute size-3 rounded-full bg-red-500 -top-1 right-0"></div>
+            ) : null}
+          </div>
 
           <Link className="font-bold text-4xl max-lg:hidden" href="/">
             Learnly
@@ -38,17 +57,29 @@ function PcNavbarPanel({ toggleTheme, theme, username }) {
             notifeModal === true ? "block" : "hidden"
           }`}
         >
-          <div className="flex justify-between items-center w-full border-b-1 border-dark/60 dark:border-white/60 p-2">
-            <span>shjksdf</span>
-            <MdDeleteOutline />
-          </div>
-          <div className="flex justify-between items-center w-full border-b-1 border-dark/60 dark:border-white/60 p-2">
-            <span>shjksdf</span>
-            <MdDeleteOutline />
-          </div>
-          <div className="flex justify-center items-center w-full">
-            <span className="text-red-600">You don't have a notification.</span>
-          </div>
+          {notification?.length > 0 ? (
+            notification.map((notif) => (
+              <div
+                key={notif._id}
+                className="flex justify-between items-center w-full border-b-1 border-dark/60 dark:border-white/60 p-2"
+              >
+                <span>{notif.title}</span>
+                <button
+                  onClick={() => {
+                    removeNotifeHandler(notif._id);
+                  }}
+                >
+                  <MdDeleteOutline className="cursor-pointer text-xl hover:text-red-500 transition duration-200 ease-in" />
+                </button>
+              </div>
+            ))
+          ) : (
+            <div className="flex justify-center items-center w-full">
+              <span className="text-red-600">
+                You don't have a notification.
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </div>

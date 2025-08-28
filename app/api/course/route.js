@@ -34,8 +34,6 @@ export async function GET(req) {
     if (title) {
       query.title = { $regex: title, $options: "i" };
     }
-    console.log(priceFrom, priceTo);
-    console.log(title);
     if (priceFrom || priceTo) {
       query.price = {};
       if (priceFrom && priceFrom !== "" && priceFrom !== "null") {
@@ -45,7 +43,6 @@ export async function GET(req) {
         query.price.$lte = Number(priceTo);
       }
     }
-    console.log(query);
     const courses = await courseModel.find(query);
     return Response.json({ message: "successfully", courses }, { status: 200 });
   } catch (err) {

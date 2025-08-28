@@ -1,11 +1,6 @@
 "use client";
-import React, { useState } from "react";
-import { FaStar } from "react-icons/fa";
-import { FaRegStar } from "react-icons/fa";
-import ContinueModal from "../../continueModal/continueModal";
+import React from "react";
 function TableForOrder({ order }) {
-  const [continueModal, setContinueModal] = useState(false);
-
   return (
     <>
       <table className="w-full text-sm">
@@ -18,14 +13,14 @@ function TableForOrder({ order }) {
           </tr>
         </thead>
         <tbody className="text-center">
-          {order.map((order, index) => (
+          {order.map((or, index) => (
             <tr
-              key={order._id}
+              key={or._id}
               className="bg-white border-b-1 dark:bg-dark dark:border-white/40 border-dark/40 hover:bg-gray-100 dark:hover:bg-gray-600 p-5"
             >
               <td className="p-2 text-center">{index + 1}</td>
-              <td className="p-2">{order.createdAt.slice(0, 10)}</td>
-              <td className="p-2">{order.amount}</td>
+              <td className="p-2">{or.createdAt.slice(0, 10)}</td>
+              <td className="p-2">{or.amount}</td>
 
               <td className="p-2">
                 <div

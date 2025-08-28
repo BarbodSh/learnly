@@ -86,6 +86,12 @@ function PanelSidebar({ username }) {
             onClick={setSidebar}
           />
           <LinkForSidebar
+            name={"Notification"}
+            link={"/panel/notification"}
+            active={sidebar}
+            onClick={setSidebar}
+          />
+          <LinkForSidebar
             name={"Order"}
             link={"/panel/order"}
             active={sidebar}
