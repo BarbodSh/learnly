@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { BiSearchAlt } from "react-icons/bi";
 import { SlHandbag } from "react-icons/sl";
@@ -22,6 +22,21 @@ function PcNavbar({
   const [searchModal, setSearchModal] = useState(false);
   const [profileModal, setProfileModal] = useState(false);
   const [bagModal, setBagModal] = useState(false);
+  const [cart, setCart] = useState([]);
+
+  const getCartItem = () => {
+    const cartInLocal = JSON.parse(localStorage.getItem("cart")) || [];
+    setCart(cartInLocal);
+  };
+  useEffect(() => {
+    getCartItem();
+    const handleStorageChange = () => getCartItem();
+    window.addEventListener("localStorageChanged", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("localStorageChanged", handleStorageChange);
+    };
+  }, []);
 
   return (
     <div
@@ -64,18 +79,27 @@ function PcNavbar({
           ) : (
             <BsMoonStars className="cursor-pointer" onClick={toggleTheme} />
           )}
-          <SlHandbag
-            className={`cursor-pointer z-40 ${
-              searchModal === true || profileModal === true || bagModal === true
-                ? "text-white"
-                : ""
-            }`}
+          <div
+            className="relative z-40"
             onClick={() => {
               setBagModal(!bagModal);
               setProfileModal(false);
               setSearchModal(false);
             }}
-          />
+          >
+            <SlHandbag
+              className={`cursor-pointer z-40 ${
+                searchModal === true ||
+                profileModal === true ||
+                bagModal === true
+                  ? "text-white"
+                  : ""
+              }`}
+            />
+            {cart.length > 0 ? (
+              <div className="absolute -top-2 -right-2 size-4 bg-red-500 rounded-full"></div>
+            ) : null}
+          </div>
           <BiSearchAlt
             className={`cursor-pointer z-40 ${
               searchModal === true || profileModal === true || bagModal === true
@@ -120,7 +144,7 @@ function PcNavbar({
         </div>
         <Searchbox searchModal={searchModal} />
         <Profilebox data={user} profileModal={profileModal} />
-        <Bagbox bagModal={bagModal} />
+        <Bagbox cart={cart} setCart={setCart} bagModal={bagModal} />
         <div
           className={`fixed top-0 right-0 left-0 w-full h-full bg-black/30 z-30 ${
             searchModal === true || profileModal === true || bagModal === true
